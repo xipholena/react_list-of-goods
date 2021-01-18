@@ -1,0 +1,1 @@
+{"version":3,"sources":["App.css"],"names":[],"mappings":"AAAA,KACE,YAAa,CACb,mCAAwC,CACxC,kBACF","file":"main.4ce535ff.chunk.css","sourcesContent":[".App {\n  padding: 20px;\n  border: 3px solid rgba(128, 0, 128, 0.1);\n  border-radius: 10px;\n}\n"]}

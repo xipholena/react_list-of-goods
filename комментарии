@@ -1,0 +1,146 @@
+default:
+  return 0;   //sort ничего не делает по дефолту
+}
+
+
+import React from 'react';
+import {GoodsList} from './components/GoodsList';
+import './App.css';
+
+const goodsFromServer = [
+  'Dumplings',
+  'Carrot',
+  'Eggs',
+  'Ice cream',
+  'Apple',
+  'Bread',
+  'Fish',
+  'Honey',
+  'Jam',
+  'Garlic',
+];
+/*const prepearedListOfGoods = goodsFromServer.map(item => ({
+  id: goodsFromServer.indexOf(item),
+  item: item
+}))
+console.log(prepearedListOfGoods)*/
+ class App extends React.Component {
+    state = {
+      goods: [...goodsFromServer],
+      visible: false,
+      isReversed: false,
+      sortBy: '',
+    }
+    showGoods = ({target}) => {
+      this.setState({
+        visible: true
+      });
+      target.hidden = true;
+    };
+
+    sortAlphabetically = () => {
+      this.setState({
+        sortBy: 'alphabet'
+      })
+    };
+
+    sortbyLength = () => {
+      this.setState({
+        sortBy: 'length'
+      })
+    };
+    reset = () => {
+      this.setState({
+        sortBy: 'index'
+      })
+    };
+
+    reverse = () => {
+      this.setState((state)=> ({
+        isReversed: !state.isReversed,
+      }))
+    };
+   render(){
+     const {visible, isReversed, goods, sortBy} = this.state;
+    console.log(goodsFromServer)
+     goods.sort((a, b) => {
+      switch (sortBy) {
+        case 'alphabet':
+          return a.localeCompare(b);
+      
+        case 'length':
+          return a.length - b.length;
+
+        case 'index':
+          return goodsFromServer.indexOf(a) - goodsFromServer.indexOf(b);
+        default:
+           return 0; 
+      }
+     });
+     if (isReversed) {
+      goods.reverse();
+     };
+
+     return(
+      <div className="App">
+        <h1>Goods</h1>
+        <button
+          type="button"
+          onClick={(e) => {
+            this.showGoods(e)
+          }}
+        >
+          Show
+        </button>
+        {visible && <GoodsList goods={goods}/>}
+        <button
+          type="button"
+          onClick={this.reverse}
+        >
+          Reverse
+        </button>
+        <button
+          type="button"
+          onClick={this.sortAlphabetically}
+        >
+          Sort alphabetically
+        </button>
+        <button
+          type="button"
+          onClick={this.sortbyLength}
+        >
+          Sort by length
+        </button>
+        <button
+          type="button"
+          onClick={this.reset}
+        >
+          Reset
+        </button>
+      </div>
+     )
+   }
+};
+
+export default App;
+
+sortAlphabetically = () => {
+      this.setState({
+        isReversed: false, //поскольку после клика по реверсу isReversed: становится true, а если он true, то этот метод будет вызываться автоматически помсле вызова любого другого
+        sortBy: 'alphabet'
+})
+      
+};
+
+если метод reset такой:
+reset = () => {
+      this.setState({
+        isReversed: false,
+        sortBy: 'index'
+      })
+    };
+
+тогда 
+
+case 'index':
+return goodsFromServer.indexOf(a) - goodsFromServer.indexOf(b);
